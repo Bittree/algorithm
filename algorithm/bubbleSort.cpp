@@ -5,7 +5,21 @@ using namespace std;
 
 vector<int> bubbleSort(vector<int> arr)
 {
-        return arr;
+	int size = arr.size();
+	int tmp = 0;
+        	for(int i = 0; i < size; i++)
+        	{
+        		for(int j = size-1; j > i; j--)
+        		{
+        			if(arr[j-1] > arr[j])
+        			{
+        				tmp = arr[j];
+        				arr[j] = arr[j-1];
+        				arr[j-1] = tmp;
+        			}
+        		}
+        	}
+        	return arr;
 }
 
 int main()
