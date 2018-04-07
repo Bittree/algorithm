@@ -12,7 +12,6 @@
 // string convert(string text, int nRows);
 // convert("PAYPALISHIRING", 3) 应当返回 "PAHNAPLSIIGYIR" 。
 
-#include "stdafx.h"
 #include <iostream>
 #include <string>
 
