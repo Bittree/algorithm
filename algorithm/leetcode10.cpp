@@ -47,6 +47,7 @@
 #include <string>
 using namespace std;
 
+// 普通递归算法
 bool isMatch(string s, string p) {
 	auto slen = s.length();
 	auto plen = p.length();
@@ -64,6 +65,7 @@ bool isMatch(string s, string p) {
 			return false;
 		}
 	}
+	// 优化速度
 	if (p[plen - 1] != '*' && p[plen - 1] != '.' && s.find(p[plen - 1]) == string::npos)
 	{
 		return false;
@@ -89,6 +91,11 @@ bool isMatch(string s, string p) {
 		}
 	}
 }
+
+// dp算法，todo
+// bool isMatch2(string s, string p) {
+
+// }
 
 int main()
 {
