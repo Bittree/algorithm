@@ -93,13 +93,39 @@ bool isMatch(string s, string p) {
 }
 
 // dp算法，todo
-// bool isMatch2(string s, string p) {
-
-// }
+bool isMatch(string s, string p)
+{
+	auto slen = s.length() + 1;
+	auto plen = p.length() + 1;
+	vector<vector<bool>> f(slen, vector<bool>(plen, false));
+	f[0][0] = true;
+	for (int i = 0; i < slen; i++)
+	{
+		for (int j = 1; j < plen; j++)
+		{
+			if (i > 0 && (s[i-1] == p[j-1] || p[j-1] == '.'))
+			{
+				f[i][j] = f[i - 1][j-1];
+			}
+			if (p[j-1] == '*')
+			{
+				if (i == 0 || s[i-1] != p[j-2] && p[j-2] != '.')
+				{
+					f[i][j] = f[i][j-2];
+				} 
+				else
+				{
+					f[i][j] = f[i-1][j] || f[i][j-1] || f[i][j-2];
+				}
+			}
+		}
+	}
+    return f[slen - 1][plen - 1];
+}
 
 int main()
 {
-	cout << isMatch("a", ".*..a*") << endl;
+	cout << isMatch2("a", ".*..a*") << endl;
 
 	return 0;
 }
