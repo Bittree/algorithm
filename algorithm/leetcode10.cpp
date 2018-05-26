@@ -92,8 +92,8 @@ bool isMatch(string s, string p) {
 	}
 }
 
-// dp算法，todo
-bool isMatch(string s, string p)
+// dp算法
+bool isMatch2(string s, string p)
 {
 	auto slen = s.length() + 1;
 	auto plen = p.length() + 1;
