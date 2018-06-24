@@ -97,4 +97,5 @@ int main()
     PrintList(l2);
     ListNode* ret = mergeTwoLists(l1, l2);
     PrintList(ret);
+    DestoryList(ret);
 }
