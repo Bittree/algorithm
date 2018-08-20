@@ -20,35 +20,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 using namespace std;
-
-bool hasFound(const string& s, int start_index, vector<string>& words)
-{
-    int words_len = words.size();
-    if(words_len == 0)
-    {
-        return true;
-    }
-
-    for(int i = 0; i < words_len; ++i)
-    {
-        string& word = words[i];
-        int word_len = word.length();
-
-        if(s.compare(start_index, word_len, word) == 0)
-        {
-            vector<string> tmp = words;
-            tmp.erase(tmp.begin() + i);
-            if(hasFound(s, start_index+word_len, tmp))
-            {
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
 
 vector<int> findSubstring(string s, vector<string>& words)
 {
@@ -60,21 +34,39 @@ vector<int> findSubstring(string s, vector<string>& words)
         return ret;
     }
 
-    int words_total_len = 0;
-    for(int i = 0; i < words_len; ++i)
-    {
-        words_total_len += words[i].length();
-    }
+    int word_len = words[0].length();
+    int words_total_len = word_len * words_len;
     if(str_len < words_total_len)
     {
         return ret;
     }
 
+    unordered_map<string, int> word_map;
+    for(int i = 0; i < words_len; ++i)
+    {
+        word_map[words[i]]++;
+    }
+
+    unordered_map<string, int> tmp_map;
     for(int i = 0; i < str_len - words_total_len + 1; ++i)
     {
-        if(hasFound(s, i, words))
+        
+        int j = i;
+        tmp_map.clear();
+        while(j - i + 1 <= words_total_len)
         {
-            ret.push_back(i);
+            string substr = s.substr(j, word_len);
+            tmp_map[substr]++;
+            if(tmp_map[substr] > word_map[substr])
+            {
+                break;
+            }else{
+                j += word_len;
+            }
+            if(j - i + 1 > words_total_len)
+            {
+                ret.push_back(i);
+            }
         }
     }
 
