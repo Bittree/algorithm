@@ -36,27 +36,6 @@ int search(vector<int>& nums, int target)
     int index = num_count/2;
     int min = 0, max = num_count-1;
     bool hasReverse = false;
-    // while(nums[index-1] < nums[index])
-    // {
-    //     if(nums[index] > nums[0])
-    //     {
-    //         if(max == index)
-    //         {
-    //             hasReverse = false;
-    //             break;
-    //         }
-    //         min = index;
-    //         index = (max-index+1)/2+index;
-    //     }else{
-    //         if(min == index)
-    //         {
-    //             hasReverse = false;
-    //             break;
-    //         }
-    //         max = index;
-    //         index = (index-min)/2+min;
-    //     }
-    // }
     int min_target = nums[0];
     while(min <= max)
     {
