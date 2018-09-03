@@ -43,3 +43,18 @@ int firstMissingPositive(vector<int>& nums)
         return i;
     }
 }
+
+int main()
+{
+    vector<int> vec;
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(0);
+    for(auto ele : vec)
+    {
+        cout << "ele ";
+    }
+    cout << endl;
+    auto result = firstMissingPositive(vec);
+    cout << " : " << result << endl;
+}
