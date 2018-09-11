@@ -44,7 +44,7 @@ string multiply(string num1, string num2)
             if(pos < ret.length())
             {
                 temp += (ret[pos]-'0');
-                ret[pos] = temp%10-'0';
+                ret[pos] = temp%10+'0';
             }else{
                 ret.append(1, temp%10+'0');
             }
