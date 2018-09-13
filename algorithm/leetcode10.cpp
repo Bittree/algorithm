@@ -45,6 +45,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 // 普通递归算法
