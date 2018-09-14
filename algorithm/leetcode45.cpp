@@ -107,6 +107,26 @@ int jump(vector<int>& nums)
     return times;
 }
 
+// 最快
+// int jump(std::vector<int>& A)
+// {
+// 	size_t n = A.size();
+// 	int *min = (int*)malloc(sizeof(int)*n);
+// 	int cur = 1;
+// 	int result;
+// 	memset(min, 0, sizeof(int)*n);
+// 	for (int i = 0; i < n; i++)
+// 	{
+// 		while (cur < n && cur - i <= A[i])
+// 		{
+// 			min[cur++] = min[i] + 1;
+// 		}
+// 	}
+// 	result = min[n - 1];
+// 	free(min);
+// 	return result;
+// }
+
 int main()
 {
     vector<int> nums;
