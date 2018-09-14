@@ -20,28 +20,91 @@
 
 using namespace std;
 
-int jump(vector<int>& nums)
+// 超时 O(n^2)
+// int jump(vector<int>& nums)
+// {
+//     int size = nums.size();
+//     if(size <= 1)
+//     {
+//         return 0;
+//     }
+//     vector<int> steps(size, numeric_limits<int>::max());
+//     steps[0] = 0;
+//     for(int i = 0; i < size-1; ++i)
+//     {
+//         int min_step = steps[i]+1;
+//         int min_limit = (i+nums[i])<(size-1)?(i+nums[i]):(size-1);
+//         for(int j = i+1; j <= min_limit; ++j)
+//         {
+//             if(steps[j] > min_step)
+//             {
+//                 steps[j] = min_step;
+//             }
+//         }
+//     }
+//     return steps[size-1];
+// }
+
+// 超时,最坏情况是【1,1,1,1,1,1,1,1......】,O(n^2)
+// int jump(vector<int>& nums)
+// {
+//     int size = nums.size();
+//     if(size <= 1)
+//     {
+//         return 0;
+//     }
+//     vector<int> min_steps;
+//     min_steps.push_back(0);
+//     for(int i = 0; i < size; ++i)
+//     {
+//         if(nums[i] <= 0)
+//         {
+//             continue;
+//         }
+//         int cur_steps = 0;
+//         for(int j = 0; j < min_steps.size(); ++j)
+//         {
+//             if(i <= min_steps[j])
+//             {
+//                 cur_steps = j;
+//                 break;
+//             }
+//         }
+//         int max_index = nums[i]+i;
+//         if(max_index >= size-1)
+//         {
+//             return cur_steps+1;
+//         }else{
+//             if(max_index > min_steps[cur_steps])
+//             {
+//                 if(min_steps.size() < cur_steps+2)
+//                 {
+//                     min_steps.push_back(max_index);
+//                     continue;
+//                 }
+//                 if(max_index > min_steps[cur_steps+1])
+//                 {
+//                     min_steps[cur_steps+1] = max_index;
+//                 }
+//             }
+//         }
+//     }
+//     return -1;
+// }
+
+int jump(vector<int>& nums) 
 {
-    int size = nums.size();
-    if(size <= 1)
-    {
-        return 0;
-    }
-    vector<int> steps(size, numeric_limits<int>::max());
-    steps[0] = 0;
-    for(int i = 0; i < size-1; ++i)
-    {
-        int min_step = steps[i]+1;
-        int min_limit = (i+nums[i])<(size-1)?(i+nums[i]):(size-1);
-        for(int j = i+1; j <= min_limit; ++j)
-        {
-            if(steps[j] > min_step)
-            {
-                steps[j] = min_step;
-            }
+    int times = 0;
+    int reached = 0;
+    int max = 0;
+    for(int i=0;i< nums.size();i++){
+        if(reached < i){
+            times++;
+            reached = max;
         }
+        max = max<i+nums[i]?i+nums[i]:max;
     }
-    return steps[size-1];
+    return times;
 }
 
 int main()
@@ -81,6 +144,20 @@ int main()
     nums.push_back(0);
     nums.push_back(0);
     nums.push_back(3);
+    cout << "[ ";
+    for(auto ele : nums)
+    {
+        cout << ele << " ";
+    }
+    cout << "] : " << jump(nums) << endl;
+
+    nums.clear();
+    for(int i = 25000; i>0; --i)
+    {
+        nums.push_back(i);
+    }
+    nums.push_back(1);
+    nums.push_back(0);
     cout << "[ ";
     for(auto ele : nums)
     {
