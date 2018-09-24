@@ -56,17 +56,18 @@ int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid)
 
 int main()
 {
-    int[][] arr = {
-        {0, 0, 0},
-        {0, 1, 0},
-        {0, 0, 0},
-    };
-    vector<vector<int>> obstacleGrid;
+    array<array<int, 3>, 3> arr = {
+		0, 0, 0,
+		0, 1, 0,
+		0, 0, 0,
+	};
+	int m = 3, n = 3;
+	vector<vector<int>> obstacleGrid(m, vector<int>(n, 0));
     cout << "[" << endl;
-    for(int i = 0; i < 3; ++i)
+    for(int i = 0; i < m; ++i)
     {
         cout << "  [ ";
-        for(int j = 0; j < 3; ++j)
+        for(int j = 0; j < n; ++j)
         {
             obstacleGrid.push_back(arr[i][j]);
             cout << arr[i][j] << " ";
