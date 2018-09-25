@@ -14,54 +14,100 @@
 
 using namespace std;
 
-bool isNumber(string s)
+bool check(string s, bool allowpoint)
 {
-	int slen = s.size();
-	bool dot = false, hase = false, hasnum = false;
-	for (int i = 0; i < slen; ++i)
+	int len = s.length();
+	if (len <= 0)
 	{
-		if (s[i] == '.')
-		{
-			if (i < slen - 1 && !(s[i + 1] >= '0' && s[i + 1] <= '9'))
-			{
-				return false;
-			}
-			if (dot)
-			{
-				return false;
-			}
-			else {
-				dot = true;
-				continue;
-			}
-		}
-		if (s[i] == 'e')
-		{
-			if (i >= slen - 1 || !(s[i + 1] >= '0' && s[i + 1] <= '9') || !hasnum)
-			{
-				return false;
-			}
-			if (hase)
-			{
-				return false;
-			}
-			else {
-				hase = true;
-				continue;
-			}
-		}
-		if (s[i] >= '0' && s[i] <= '9')
-		{
-			hasnum = true;
-			continue;
-		}
-		if (s[i] == ' ')
-		{
-			continue;
-		}
 		return false;
 	}
-	return hasnum;
+	int index = 0;
+	bool num1 = false;
+	if (s[index] == '+' || s[index] == '-')
+	{
+		++index;
+	}
+	if (index >= len)
+	{
+		return false;
+	}
+	for (; index < len; ++index)
+	{
+		if (s[index] < '0' || s[index] > '9')
+		{
+			break;
+		}
+		else
+		{
+			num1 = true;
+		}
+	}
+	if (index < len && !allowpoint)
+	{
+		return false;
+	}
+	if (index < len && s[index] == '.')
+	{
+		++index;
+		int num2 = false;
+		for (; index < len; ++index)
+		{
+			if (s[index] < '0' || s[index] > '9')
+			{
+				break;
+			}
+			else
+			{
+				num2 = true;
+			}
+		}
+		if (!num1 && !num2)
+		{
+			return false;
+		}
+	}
+	return index == len;
+}
+
+bool isNumber(string s)
+{
+	// 去掉头尾的空格，中间有空格的话就是错的
+	while (s.length() > 0)
+	{
+		if (s[0] == ' ')
+		{
+			s = s.substr(1);
+		}
+		else
+		{
+			break;
+		}
+	}
+	while (s.length() > 0)
+	{
+		if (s[s.length() - 1] == ' ')
+		{
+			s = s.substr(0, s.length() - 1);
+		}
+		else
+		{
+			break;
+		}
+	}
+	if (s.length() <= 0)
+	{
+		return false;
+	}
+	auto epos = s.find('e');
+	if (epos == string::npos)
+	{
+		return check(s, true);
+	}
+	else
+	{
+		// e前面允许有小数点，后面不允许有小数点，比如1.5e20
+		return check(s.substr(0, epos), true) && check(s.substr(epos + 1), false);
+	}
 }
 
 int main()
