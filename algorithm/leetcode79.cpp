@@ -30,10 +30,10 @@ bool exist_dfs(vector<vector<char>>& board, string& word, int i, int j, int word
 
     board[i][j] = 0;
     bool ret = false;
-    if(j > 0 && board[i][j-1] == word[word_index+1] && exist_dp(board, word, i, j-1, word_index+1)
-    || j < board[0].size()-1 && board[i][j+1] == word[word_index+1] && exist_dp(board, word, i, j+1, word_index+1)
-    || i > 0 && board[i-1][j] == word[word_index+1] && exist_dp(board, word, i-1, j, word_index+1)
-    || i < board.size()-1 && board[i+1][j] == word[word_index+1] && exist_dp(board, word, i+1, j, word_index+1))
+    if(j > 0 && board[i][j-1] == word[word_index+1] && exist_dfs(board, word, i, j-1, word_index+1)
+    || j < board[0].size()-1 && board[i][j+1] == word[word_index+1] && exist_dfs(board, word, i, j+1, word_index+1)
+    || i > 0 && board[i-1][j] == word[word_index+1] && exist_dfs(board, word, i-1, j, word_index+1)
+    || i < board.size()-1 && board[i+1][j] == word[word_index+1] && exist_dfs(board, word, i+1, j, word_index+1))
     {
         ret = true;
     }
@@ -52,7 +52,7 @@ bool exist(vector<vector<char>>& board, string word)
     {
         for(int j = 0; j < board[0].size(); ++j)
         {
-            if(board[i][j] == word[0] && exist_dp(board, word, i, j, 0))
+            if(board[i][j] == word[0] && exist_dfs(board, word, i, j, 0))
             {
                 return true;
             }
