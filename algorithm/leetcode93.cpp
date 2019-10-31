@@ -24,13 +24,17 @@ vector<string> restoreIpAddresses(string s)
 				{
 					if (i+j+k+l==s.length())
 					{
-						string a = s.substr(0, i);
-						string b = s.substr(i, j);
-						string c = s.substr(i+j, k);
-						string d = s.substr(i+j+k, l);
-						if (stoi(a) <= 255 && stoi(b) <= 255 && stoi(c) <= 255 && stoi(d) <= 255)
+						int ai = stoi(s.substr(0, i));
+						int bi = stoi(s.substr(i, j));
+						int ci = stoi(s.substr(i + j, k));
+						int di = stoi(s.substr(i + j + k, l));
+						if (ai<=255 && bi<=255 && ci<=255 && di<=255 )
 						{
-							ret.push_back(a+'.'+b+'.'+c+'.'+d);
+							string result = to_string(ai) + "." + to_string(bi) + "." + to_string(ci) + "." + to_string(di);
+							if (result.length()==s.length()+3)
+							{
+								ret.push_back(result);
+							}
 						}
 					}
 				}
