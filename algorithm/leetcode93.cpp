@@ -11,68 +11,32 @@
 
 using namespace std;
 
-bool isVaildIP(string str)
-{
-	try
-	{
-		int num = stoi(str);
-		if (num >= 0 && num <= 255)
-		{
-			return true;
-		}
-		return false;
-	}
-	catch (exception e)
-	{
-		return false;
-	}
-}
-
-void restore(vector<string>& ret, string& s, vector<int> arr)
-{
-	int size = arr.size();
-	if (size >= 3)
-	{
-		string result = s;
-		result.insert(arr[2], ".");
-		result.insert(arr[1], ".");
-		result.insert(arr[0], ".");
-		return;
-	}
-	for (int i = 0; i < 3; ++i)
-	{
-		if (size == i)
-		{
-			int index = i - 1;
-			if (i > 0 && arr[index] >= s.length() - 1)
-			{
-				return;
-			}
-			for (int j = 1; j <= 3 && arr[index] + j < s.length(); ++j)
-			{
-				string str = s.substr(arr[index], j);
-				if (!isVaildIP(str))
-				{
-					break;
-				}
-				arr.push_back(arr[index] + j);
-				restore(ret, s, arr);
-				arr.pop_back();
-			}
-			break;
-		}
-	}
-}
-
 vector<string> restoreIpAddresses(string s)
 {
 	vector<string> ret;
-	if (s.length() < 4 || s.length() > 12)
+	for (int i = 1; i < 4; ++i)
 	{
-		return ret;
+		for (int j = 1; j < 4; ++j)
+		{
+			for (int k = 1; k < 4; ++k)
+			{
+				for (int l = 1; l < 4; ++l)
+				{
+					if (i+j+k+l==s.length())
+					{
+						string a = s.substr(0, i);
+						string b = s.substr(i, j);
+						string c = s.substr(i+j, k);
+						string d = s.substr(i+j+k, l);
+						if (stoi(a) <= 255 && stoi(b) <= 255 && stoi(c) <= 255 && stoi(d) <= 255)
+						{
+							ret.push_back(a+'.'+b+'.'+c+'.'+d);
+						}
+					}
+				}
+			}
+		}
 	}
-	vector<int> arr;
-	restore(ret, s, arr);
 	return ret;
 }
 
