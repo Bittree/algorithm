@@ -41,15 +41,37 @@ func isSymmetric(root *TreeNode) bool {
 	}
 }
 
+func isSymmetric2(root *TreeNode) bool {
+	if(root == nil) {
+        return true
+    }
+	records := []*TreeNode{root}
+	for {
+		if len(records) <= 0 {
+			break
+		}
+		target := records[0]
+		records = records[1:]
+
+		if (target.Left != nil && target.Right == nil) || (target.Left == nil && target.Right != nil) || (target.Left != nil && target.Right != nil && target.Left.Val != target.Right.Val) {
+			return false
+		} else if target.Left != nil && target.Right != nil && target.Left.Val == target.Right.Val {
+			target.Left.Right, target.Right.Right = target.Right.Right, target.Left.Right
+			records = append(records, target.Left, target.Right)
+		}
+	}
+	return true
+}
+
 func main() {
 	root := &TreeNode{Val: 1,
 		Left: &TreeNode{Val: 2,
-			//Left:  &TreeNode{Val: 3},
-			Right: &TreeNode{Val: 3}},
+			Left:  &TreeNode{Val: 3},
+			Right: &TreeNode{Val: 4}},
 		Right: &TreeNode{Val: 2,
-			//Left:  &TreeNode{Val: 4},
+			Left:  &TreeNode{Val: 4},
 			Right: &TreeNode{Val: 3}}}
-	ret := isSymmetric(root)
+	ret := isSymmetric2(root)
 	fmt.Println("ret: ", ret)
 	// fmt.Println("root: ", root.Val)
 	// fmt.Println("2Left: ", root.Left.Val)
