@@ -42,9 +42,9 @@ func isSymmetric(root *TreeNode) bool {
 }
 
 func isSymmetric2(root *TreeNode) bool {
-	if(root == nil) {
-        return true
-    }
+	if root == nil {
+		return true
+	}
 	records := []*TreeNode{root}
 	for {
 		if len(records) <= 0 {

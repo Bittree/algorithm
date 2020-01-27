@@ -43,10 +43,6 @@ func levelOrder(root *TreeNode) [][]int {
 			}
 			ret[i] = append(ret[i], targetNode.Val)
 			if targetNode != nil && (targetNode.Left != nil || targetNode.Right != nil) {
-				// _, ok := records[i+1]
-				// if !ok {
-				// 	records[i+1] = make([]*TreeNode)
-				// }
 				if targetNode.Left != nil {
 					records[i+1] = append(records[i+1], targetNode.Left)
 				}
@@ -59,9 +55,6 @@ func levelOrder(root *TreeNode) [][]int {
 		if !ok {
 			break
 		}
-		//  else {
-		// 	ret = append(ret, make([]int))
-		// }
 	}
 	return ret
 }
