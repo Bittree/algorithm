@@ -40,6 +40,9 @@ import "fmt"
 // dp[i][0][1] 不可能出现这种情况
 func maxProfit(prices []int) int {
 	n := len(prices)
+	if n <= 0 {
+		return 0
+	}
 	tradeTimes := 2
 	dp := make([][][]int, n)
 	max := func(a, b int) int {
@@ -51,18 +54,16 @@ func maxProfit(prices []int) int {
 	}
 	for i := 0; i < n; i++ {
 		dp[i] = make([][]int, tradeTimes+1)
-		for j := tradeTimes; j > 0; j-- {
+		for j := tradeTimes; j >= 0; j-- {
 			dp[i][j] = make([]int, tradeTimes)
-			//dp[i][j][0] = 0
 			if i == 0 {
 				// dp[i][j][0] = max(dp[-1][j][0], dp[-1][j][1]+prices[i]) = max(0, impossible) = 0
 				dp[i][j][0] = 0
 				// dp[i][j][1] = max(dp[-1][j][1], dp[-1][j-1][0]-prices[i]) = max(impossible, -prices[i]) = -prices[i]
 				dp[i][j][1] = -prices[i]
-			} else {
-				//fmt.Println("i: ", i, " j: ", j, " len(dp[i]): ", len(dp[i]), " len(dp[i][j]): ", len(dp[i][j]))
-				dp[i][j][0] = 0 //max(dp[i-1][j][0], dp[i-1][j][1]+prices[i])
-				dp[i][j][1] = 0 //max(dp[i-1][j][1], dp[i-1][j-1][0]-prices[i])
+			} else if j > 0 {
+				dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j][1]+prices[i])
+				dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j-1][0]-prices[i])
 			}
 		}
 	}
