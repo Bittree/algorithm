@@ -27,13 +27,58 @@
 
 package main
 
+import "fmt"
+
 // dp[i][j][k]
 // 三种状态：0<=i<len(prices) 第几天；j 还有几次交易次数；k 当前手中是否有股票
 // dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j][1]+prices[i]) 今天没有股票，要么昨天就没有股票，或者昨天有然后卖了
 // dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j-1][0]-prices[i]) 今天有股票，要么昨天就有股票，或者昨天没有但是今天买了
 // Base case:
 // dp[0][j][0] = 0 刚开始还没有买卖，手里不可能有股票，利润为0
-// dp[i][0][0] = dp[i][0][1] = 0 如果允许次数为0表示不允许买卖，利润为0
+// dp[0][j][1] 不可能出现这种情况
+// dp[i][0][0] = 0 如果允许次数为0表示不允许买卖，利润为0
+// dp[i][0][1] 不可能出现这种情况
 func maxProfit(prices []int) int {
+	n := len(prices)
+	tradeTimes := 2
+	dp := make([][][]int, n)
+	max := func(a, b int) int {
+		if a > b {
+			return a
+		} else {
+			return b
+		}
+	}
+	for i := 0; i < n; i++ {
+		dp[i] = make([][]int, tradeTimes+1)
+		for j := tradeTimes; j > 0; j-- {
+			dp[i][j] = make([]int, tradeTimes)
+			//dp[i][j][0] = 0
+			if i == 0 {
+				// dp[i][j][0] = max(dp[-1][j][0], dp[-1][j][1]+prices[i]) = max(0, impossible) = 0
+				dp[i][j][0] = 0
+				// dp[i][j][1] = max(dp[-1][j][1], dp[-1][j-1][0]-prices[i]) = max(impossible, -prices[i]) = -prices[i]
+				dp[i][j][1] = -prices[i]
+			} else {
+				//fmt.Println("i: ", i, " j: ", j, " len(dp[i]): ", len(dp[i]), " len(dp[i][j]): ", len(dp[i][j]))
+				dp[i][j][0] = 0 //max(dp[i-1][j][0], dp[i-1][j][1]+prices[i])
+				dp[i][j][1] = 0 //max(dp[i-1][j][1], dp[i-1][j-1][0]-prices[i])
+			}
+		}
+	}
+	return dp[n-1][tradeTimes][0]
+}
 
+func main() {
+	arr := []int{3, 3, 5, 0, 0, 3, 1, 4}
+	ret := maxProfit(arr)
+	fmt.Println(ret) // 6
+
+	arr = []int{7, 6, 4, 3, 1}
+	ret = maxProfit(arr)
+	fmt.Println(ret) // 0
+
+	arr = []int{1, 2, 3, 4, 5}
+	ret = maxProfit(arr)
+	fmt.Println(ret) // 4
 }
