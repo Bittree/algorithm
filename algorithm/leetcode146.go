@@ -114,6 +114,10 @@ func (this *DoubleList) PrintAll() {
 }
 
 // --------------------------------------
+// 这题最重要的问题是数据结构的选择，既要查询快，又要插入删除快，所以选择两种数据结构结合：
+// map 查询O(1)
+// list双向链表 插入删除O(1) 在map的value里面存list中的节点，查找list中对应节点也是O(1)
+// 用双向链表的原因是插入删除时要快速处理前后节点的指向，节点中存key而不是只存value的原因是超过cap需要删除尾部节点时，可以直接通过节点中的key找到并删除map中的记录
 
 type LRUCache struct {
     List *DoubleList
